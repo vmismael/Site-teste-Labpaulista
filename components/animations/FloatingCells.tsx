@@ -114,13 +114,27 @@ export default function FloatingCells({ opacity }: { opacity: number }) {
         { cx: 93, cy: 15, r: 1.2, c: "rgba(255,255,255,0.65)", d: "-2.5s", dur: "4s" },
         { cx: 8,  cy: 40, r: 1.5, c: "rgba(200,16,46,0.80)",  d: "-6s",   dur: "7s" },
       ].map(({ cx, cy, r, c, d, dur }) => (
-        <circle
-          key={`${cx}-${cy}`}
-          cx={cx} cy={cy} r={r}
-          fill={c}
-          filter="url(#cGlow)"
-          style={{ animation: `cellShimmer ${dur} ease-in-out infinite`, animationDelay: d }}
-        />
+        <g key={`${cx}-${cy}`}>
+          {/* pulso 1 */}
+          <circle cx={cx} cy={cy} r={r * 1.1} fill={c}
+            style={{
+              animation: `glowPulse ${dur} ease-out infinite`,
+              animationDelay: d,
+              transformBox: "fill-box",
+              transformOrigin: "center",
+            }} />
+          {/* pulso 2 — defasado em metade do período */}
+          <circle cx={cx} cy={cy} r={r * 1.1} fill={c}
+            style={{
+              animation: `glowPulse ${dur} ease-out infinite`,
+              animationDelay: `calc(${d} - ${parseFloat(dur) / 2}s)`,
+              transformBox: "fill-box",
+              transformOrigin: "center",
+            }} />
+          {/* núcleo sólido */}
+          <circle cx={cx} cy={cy} r={r} fill={c}
+            style={{ animation: `cellShimmer ${dur} ease-in-out infinite`, animationDelay: d }} />
+        </g>
       ))}
     </svg>
   );
