@@ -51,7 +51,7 @@ export default function Header() {
             </Link>
           ))}
           <a
-            href="{RESULTADOS_URL}"
+            href={RESULTADOS_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="ml-2 px-4 py-2 bg-[#c8102e] hover:bg-[#a00e25] text-white text-sm font-medium transition-colors duration-150 rounded-[4px] font-[var(--font-ibmplex)]"
@@ -96,7 +96,7 @@ export default function Header() {
               </Link>
             ))}
             <a
-              href="{RESULTADOS_URL}"
+              href={RESULTADOS_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-2 px-4 py-2 bg-[#c8102e] hover:bg-[#a00e25] text-white text-sm font-medium transition-colors duration-150 rounded-[4px] text-center font-[var(--font-ibmplex)]"
