@@ -118,14 +118,14 @@ export default function VideoHero() {
   // ── Textos ───────────────────────────────────────────────────────────────
   const s0 = fadeInOut(0.28, 0.33, 0.44, 0.50, progress); // Headline
   const s1 = fadeInOut(0.50, 0.55, 0.64, 0.70, progress); // Estatísticas
-  const s2 = fadeInOut(0.70, 0.75, 1.00, 1.00, progress); // CTA — sem saída
+  const s2 = fadeInOut(0.84, 0.90, 1.00, 1.00, progress); // CTA — dentro do DNA hold (após ECG sumir)
 
   // Y de cada cena: sobe de baixo na entrada, sai pelo topo na saída
   const slideIn = (s: number, e: number) => (1 - clamp((progress - s) / (e - s), 0, 1)) * 30;
   const slideOut = (s: number, e: number) => clamp((progress - s) / (e - s), 0, 1) * -50;
   const s0Y = slideIn(0.28, 0.33) + slideOut(0.44, 0.50);
   const s1Y = slideIn(0.50, 0.55) + slideOut(0.64, 0.70);
-  const s2Y = slideIn(0.70, 0.75);
+  const s2Y = slideIn(0.84, 0.90);
 
   const showScrollHint = progress < 0.03;
 
@@ -190,6 +190,7 @@ export default function VideoHero() {
             <div
               className="absolute inset-x-0 px-6 md:px-10"
               style={{
+                display: s0 < 0.01 ? "none" : "block",
                 opacity: s0,
                 transform: `translateY(${s0Y}px)`,
                 pointerEvents: s0 > 0.3 ? "auto" : "none",
@@ -213,6 +214,7 @@ export default function VideoHero() {
             <div
               className="absolute inset-x-0 px-6 md:px-10"
               style={{
+                display: s1 < 0.01 ? "none" : "block",
                 opacity: s1,
                 transform: `translateY(${s1Y}px)`,
                 pointerEvents: s1 > 0.3 ? "auto" : "none",
@@ -243,6 +245,7 @@ export default function VideoHero() {
             <div
               className="absolute inset-x-0 px-6 md:px-10"
               style={{
+                display: s2 < 0.01 ? "none" : "block",
                 opacity: s2,
                 transform: `translateY(${s2Y}px)`,
                 pointerEvents: s2 > 0.3 ? "auto" : "none",
