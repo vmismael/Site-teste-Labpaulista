@@ -20,11 +20,11 @@ export default function FloatingCells({ opacity }: { opacity: number }) {
         </filter>
         <radialGradient id="gWhite" cx="35%" cy="32%" r="65%">
           <stop offset="0%"   stopColor="rgba(255,255,255,0.30)" />
-          <stop offset="100%" stopColor="rgba(255,255,255,0.05)" />
+          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
         </radialGradient>
         <radialGradient id="gRed" cx="35%" cy="32%" r="65%">
           <stop offset="0%"   stopColor="rgba(200,16,46,0.45)" />
-          <stop offset="100%" stopColor="rgba(200,16,46,0.08)" />
+          <stop offset="100%" stopColor="rgba(200,16,46,0)" />
         </radialGradient>
       </defs>
 
