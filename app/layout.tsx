@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsappFloat from "@/components/WhatsappFloat";
 import CookieBanner from "@/components/CookieBanner";
+import { LenisProvider } from "@/components/LenisProvider";
 import { SITE_NAME, SITE_DESCRIPTION, UNIDADES } from "@/lib/constants";
 
 const playfair = Playfair_Display({
@@ -80,11 +81,13 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-white text-[#0a0a0a] antialiased">
-        <Header />
-        <main className="pt-16">{children}</main>
-        <Footer />
-        <WhatsappFloat />
-        <CookieBanner />
+        <LenisProvider>
+          <Header />
+          <main className="pt-16">{children}</main>
+          <Footer />
+          <WhatsappFloat />
+          <CookieBanner />
+        </LenisProvider>
       </body>
     </html>
   );

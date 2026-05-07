@@ -1,4 +1,8 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Link from "next/link";
+import { gsap } from "@/lib/gsap";
 import { ESPECIALIDADES } from "@/lib/constants";
 
 const EXAMES_DESTAQUE = [
@@ -26,6 +30,35 @@ interface ExamesGridProps {
 
 export default function ExamesGrid({ showAll = false }: ExamesGridProps) {
   const items = showAll ? ESPECIALIDADES : ESPECIALIDADES.slice(0, 8);
+  const gridRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const cards = gridRef.current?.querySelectorAll<HTMLElement>(".exame-card");
+    if (!cards?.length) return;
+
+    gsap.set(cards, { opacity: 0, y: 16 });
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          gsap.to(cards, {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.05,
+            ease: "power2.out",
+          });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(gridRef.current!);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
@@ -49,11 +82,11 @@ export default function ExamesGrid({ showAll = false }: ExamesGridProps) {
             </div>
           )}
 
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <ul ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {items.map(({ nome, descricao }) => (
               <li
                 key={nome}
-                className="bg-white border border-[rgba(0,0,0,0.08)] p-6 rounded-[4px] flex flex-col gap-3 group hover:border-[rgba(200,16,46,0.3)] transition-colors duration-200"
+                className="exame-card bg-white border border-[rgba(0,0,0,0.08)] p-6 rounded-[4px] flex flex-col gap-3 group hover:border-[rgba(200,16,46,0.3)] transition-colors duration-200"
               >
                 <div
                   className="w-1 h-5 bg-[#c8102e] rounded-full"
@@ -82,7 +115,6 @@ export default function ExamesGrid({ showAll = false }: ExamesGridProps) {
         </div>
       </section>
 
-      {/* Exames em destaque — exibido só na página /exames */}
       {showAll && (
         <section className="bg-white py-20 border-t border-[rgba(0,0,0,0.06)]" aria-labelledby="destaque-heading">
           <div className="container-content">
@@ -116,7 +148,6 @@ export default function ExamesGrid({ showAll = false }: ExamesGridProps) {
               ))}
             </ul>
 
-            {/* Coleta domiciliar */}
             <div className="mt-10 p-6 border border-[rgba(200,16,46,0.2)] bg-[rgba(200,16,46,0.03)] rounded-[4px]">
               <p className="text-[#c8102e] text-xs font-semibold tracking-widest uppercase mb-2 font-[var(--font-ibmplex)]">
                 Serviço disponível

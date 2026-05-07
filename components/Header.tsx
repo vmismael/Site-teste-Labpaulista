@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { cn } from "@/lib/cn";
 import { RESULTADOS_URL } from "@/lib/constants";
 
@@ -19,10 +21,46 @@ const NAV_LINKS = [
 export default function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    let lastY = 0;
+    let hidden = false;
+
+    ScrollTrigger.create({
+      start: "top top",
+      onUpdate: (self) => {
+        const scrollY = self.scroll();
+        if (scrollY < 80) {
+          if (hidden) {
+            gsap.to(headerRef.current, { yPercent: 0, duration: 0.3, ease: "power2.out" });
+            hidden = false;
+          }
+          lastY = scrollY;
+          return;
+        }
+
+        const direction = scrollY > lastY ? 1 : -1;
+        lastY = scrollY;
+
+        if (direction === 1 && !hidden) {
+          gsap.to(headerRef.current, { yPercent: -100, duration: 0.3, ease: "power2.in" });
+          hidden = true;
+        } else if (direction === -1 && hidden) {
+          gsap.to(headerRef.current, { yPercent: 0, duration: 0.3, ease: "power2.out" });
+          hidden = false;
+        }
+      },
+    });
+  }, { scope: headerRef });
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-[rgba(0,0,0,0.08)]">
+    <header
+      ref={headerRef}
+      className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-[rgba(0,0,0,0.08)]"
+    >
       <div className="container-content flex items-center justify-between h-16">
+        {/* Logo — esquerda */}
         <Link
           href="/"
           className="flex items-center gap-2"

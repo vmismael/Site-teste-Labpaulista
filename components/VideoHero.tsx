@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import MolecularNet  from "@/components/animations/MolecularNet";
+import MolecularNet from "@/components/animations/MolecularNet";
 import FloatingCells from "@/components/animations/FloatingCells";
-import ECGWave       from "@/components/animations/ECGWave";
-import DNAHelix      from "@/components/animations/DNAHelix";
+import ECGWave from "@/components/animations/ECGWave";
+import DNAHelix from "@/components/animations/DNAHelix";
 
 function clamp(val: number, min: number, max: number) {
   return Math.max(min, Math.min(max, val));
@@ -59,8 +59,8 @@ function HeroLogo() {
 }
 
 export default function VideoHero() {
-  const sectionRef  = useRef<HTMLDivElement>(null);
-  const rafRef      = useRef<number>(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>(0);
   const progressRef = useRef(0);
   const lastProgRef = useRef(-1);
 
@@ -71,7 +71,7 @@ export default function VideoHero() {
     if (!section) return;
 
     const onScroll = () => {
-      const rect       = section.getBoundingClientRect();
+      const rect = section.getBoundingClientRect();
       const scrollable = section.offsetHeight - window.innerHeight;
       if (scrollable <= 0) return;
       progressRef.current = clamp(-rect.top, 0, scrollable) / scrollable;
@@ -97,10 +97,10 @@ export default function VideoHero() {
   }, []);
 
   // ── Logo ─────────────────────────────────────────────────────────────────
-  const logoT     = easeInOut(clamp((progress - 0.16) / 0.10, 0, 1));
-  const logoLeft  = lerp(50, 87, logoT);
-  const logoTop   = lerp(50, 13, logoT);
-  const logoScale = lerp(1.6, 0.42, logoT);
+  const logoT = easeInOut(clamp((progress - 0.16) / 0.10, 0, 1));
+  const logoLeft = lerp(50, 94, logoT);
+  const logoTop = lerp(50, 13, logoT);
+  const logoScale = lerp(1.6, 1, logoT);
   const logoOpacity = Math.min(progress / 0.04, 1);
 
   // ── Animações de fundo ───────────────────────────────────────────────────
@@ -111,9 +111,9 @@ export default function VideoHero() {
   const a3 = fadeInOut(0.78, 0.84, 1.00, 1.00, progress);
 
   // DNA sobe de baixo: começa 750px abaixo do centro (400px no mobile), chega ao centro conforme scrola
-  const dnaRise    = clamp((progress - 0.78) / 0.22, 0, 1);
+  const dnaRise = clamp((progress - 0.78) / 0.22, 0, 1);
   const dnaMaxShift = typeof window !== "undefined" && window.innerWidth < 768 ? 400 : 750;
-  const dnaYShift  = (1 - dnaRise) * dnaMaxShift;
+  const dnaYShift = (1 - dnaRise) * dnaMaxShift;
 
   // ── Textos ───────────────────────────────────────────────────────────────
   const s0 = fadeInOut(0.28, 0.33, 0.44, 0.50, progress); // Headline
@@ -131,6 +131,7 @@ export default function VideoHero() {
 
   return (
     <section
+      id="video-hero"
       ref={sectionRef}
       className="-mt-16 relative"
       style={{ height: "550vh" }}
@@ -139,10 +140,10 @@ export default function VideoHero() {
       <div className="sticky top-0 h-screen overflow-hidden bg-[#0a0a0a]">
 
         {/* ── Animações ── */}
-        <MolecularNet  opacity={a0} />
+        <MolecularNet opacity={a0} />
         <FloatingCells opacity={a1} />
-        <ECGWave       opacity={a2} />
-        <DNAHelix      opacity={a3} yShift={dnaYShift} />
+        <ECGWave opacity={a2} />
+        <DNAHelix opacity={a3} yShift={dnaYShift} />
 
         {/* Vinheta radial */}
         <div
@@ -228,10 +229,10 @@ export default function VideoHero() {
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl">
                 {[
-                  { valor: "+20",     label: "Anos de operação" },
+                  { valor: "+20", label: "Anos de operação" },
                   { valor: "ONA III", label: "Nível máximo" },
                   { valor: "Platina", label: "15 anos PNCQ" },
-                  { valor: "2",       label: "Unidades SP" },
+                  { valor: "2", label: "Unidades SP" },
                 ].map(({ valor, label }) => (
                   <div key={label} className="border-l-2 border-[#c8102e] pl-4">
                     <p className="text-white text-2xl font-extrabold font-[var(--font-playfair)]">{valor}</p>

@@ -1,12 +1,33 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { gsap } from "@/lib/gsap"
 import { RatingInteraction } from "@/components/ui/emoji-rating"
 import { WHATSAPP_URL } from "@/lib/constants"
 
 export default function AvaliacaoSection() {
   const [rating, setRating] = useState(0)
   const [submitted, setSubmitted] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    gsap.set(sectionRef.current, { opacity: 0, y: 20 })
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          gsap.to(sectionRef.current, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" })
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(sectionRef.current!)
+    return () => observer.disconnect()
+  }, [])
 
   const handleSubmit = () => {
     if (rating === 0) return
@@ -15,6 +36,7 @@ export default function AvaliacaoSection() {
 
   return (
     <section
+      ref={sectionRef}
       className="bg-[#f7f7f7] border-t border-[rgba(0,0,0,0.06)] py-24"
       aria-labelledby="avaliacao-heading"
     >

@@ -1,9 +1,52 @@
+"use client";
+
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { CERTIFICACOES } from "@/lib/constants";
 import { cn } from "@/lib/cn";
 
 export default function CertificacoesTimeline() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // Linha cresce conforme a seção sobe pela viewport
+    gsap.fromTo(
+      lineRef.current,
+      { scaleY: 0 },
+      {
+        scaleY: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          end: "bottom 60%",
+          scrub: 1,
+        },
+      }
+    );
+
+    // Itens revelam com stagger leve, cada um com trigger individual
+    const items = sectionRef.current?.querySelectorAll(".cert-item");
+    items?.forEach((item) => {
+      gsap.from(item, {
+        scrollTrigger: {
+          trigger: item,
+          start: "top 88%",
+        },
+        opacity: 0,
+        x: -16,
+        duration: 0.55,
+        ease: "power2.out",
+      });
+    });
+  }, { scope: sectionRef, dependencies: [] });
+
   return (
-    <section className="bg-white py-28" aria-labelledby="cert-heading">
+    <section ref={sectionRef} className="bg-white py-28" aria-labelledby="cert-heading">
       <div className="container-content">
         <div className="mb-14">
           <p className="text-[#c8102e] text-xs font-semibold tracking-widest uppercase mb-3 font-[var(--font-ibmplex)]">
@@ -23,13 +66,14 @@ export default function CertificacoesTimeline() {
 
         <ol aria-label="Linha do tempo de certificações" className="relative">
           <div
-            className="absolute left-[11px] top-2 bottom-2 w-px bg-[rgba(0,0,0,0.08)]"
+            ref={lineRef}
+            className="absolute left-[11px] top-2 bottom-2 w-px bg-[rgba(0,0,0,0.08)] origin-top"
             aria-hidden="true"
           />
 
           <div className="flex flex-col gap-10">
             {CERTIFICACOES.map((cert) => (
-              <li key={`${cert.ano}-${cert.titulo}`} className="flex gap-6">
+              <li key={`${cert.ano}-${cert.titulo}`} className="cert-item flex gap-6">
                 {/* Dot */}
                 <div className="relative shrink-0 mt-1">
                   <div
