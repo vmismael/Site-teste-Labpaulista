@@ -13,18 +13,37 @@ export default function UnidadesPage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="bg-[#f7f7f7] border-b border-[rgba(0,0,0,0.06)] py-24" aria-labelledby="unidades-heading">
-        <div className="container-content max-w-3xl">
-          <p className="text-[#c8102e] text-xs font-semibold tracking-widest uppercase mb-4 font-[var(--font-ibmplex)]">
+      <section className="relative bg-[#0a0a0a] overflow-hidden" aria-labelledby="unidades-heading">
+        <div className="absolute inset-0">
+          <Image
+            src="/lab-frente.webp"
+            alt=""
+            fill
+            className="object-cover opacity-30"
+            priority
+            aria-hidden="true"
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to right, rgba(10,10,10,0.92) 40%, rgba(10,10,10,0.55) 100%)",
+            }}
+            aria-hidden="true"
+          />
+        </div>
+        <div className="relative container-content py-36">
+          <p className="text-[#c8102e] text-xs font-semibold tracking-widest uppercase mb-5 font-[var(--font-ibmplex)]">
             Onde estamos
           </p>
           <h1
             id="unidades-heading"
-            className="text-[#111111] text-4xl sm:text-5xl font-extrabold leading-tight mb-6 font-[var(--font-playfair)]"
+            className="text-white text-5xl sm:text-6xl md:text-7xl font-extrabold leading-[1.05] tracking-tight mb-8 font-[var(--font-playfair)] max-w-2xl"
           >
-            Nossas Unidades
+            Nossas<br />
+            <em className="not-italic text-[#c8102e]">Unidades</em>
           </h1>
-          <p className="text-[#6b6b6b] text-lg leading-relaxed font-[var(--font-ibmplex)]">
+          <p className="text-[rgba(255,255,255,0.7)] text-lg leading-relaxed max-w-xl font-[var(--font-ibmplex)]">
             Atendemos em Rio Claro e Santa Gertrudes, com salas de coleta
             individualizadas e estrutura adaptada para todos os pacientes.
           </p>
