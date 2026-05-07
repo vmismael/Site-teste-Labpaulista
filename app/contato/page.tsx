@@ -1,18 +1,63 @@
-import type { Metadata } from "next";
-import { Phone, MapPin, Clock, Mail, MessageCircle, Instagram, Facebook } from "lucide-react";
-import { UNIDADES, SITE_NAME, EMAIL, WHATSAPP_URL, INSTAGRAM, FACEBOOK } from "@/lib/constants";
+"use client";
 
-export const metadata: Metadata = {
-  title: `Contato | ${SITE_NAME}`,
-  description:
-    "Entre em contato com o Laboratório Paulista. Telefones, endereços e formulário de mensagem.",
-};
+import { useState, useRef } from "react";
+import {
+  Phone,
+  MapPin,
+  Clock,
+  Mail,
+  MessageCircle,
+  Instagram,
+  Facebook,
+  CheckCircle,
+  AlertCircle,
+  Loader2,
+} from "lucide-react";
+import { UNIDADES, EMAIL, WHATSAPP_URL, INSTAGRAM, FACEBOOK } from "@/lib/constants";
+
+type Status = "idle" | "sending" | "success" | "error";
 
 export default function ContatoPage() {
+  const [status, setStatus] = useState<Status>("idle");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (status === "sending") return;
+
+    setStatus("sending");
+
+    const fd = new FormData(e.currentTarget);
+    const payload = {
+      nome: fd.get("nome") as string,
+      email: fd.get("email") as string,
+      telefone: fd.get("telefone") as string,
+      mensagem: fd.get("mensagem") as string,
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error();
+
+      setStatus("success");
+      formRef.current?.reset();
+    } catch {
+      setStatus("error");
+    }
+  }
+
   return (
     <>
       {/* Hero */}
-      <section className="bg-[#f7f7f7] border-b border-[rgba(0,0,0,0.06)] py-24" aria-labelledby="contato-heading">
+      <section
+        className="bg-[#f7f7f7] border-b border-[rgba(0,0,0,0.06)] py-24"
+        aria-labelledby="contato-heading"
+      >
         <div className="container-content max-w-3xl">
           <p className="text-[#c8102e] text-xs font-semibold tracking-widest uppercase mb-4 font-[var(--font-ibmplex)]">
             Fale conosco
@@ -50,7 +95,11 @@ export default function ContatoPage() {
                       className="inline-flex items-center gap-2.5 text-sm text-[#6b6b6b] hover:text-[#0a0a0a] transition-colors font-[var(--font-ibmplex)]"
                       aria-label="Abrir WhatsApp"
                     >
-                      <MessageCircle size={16} className="text-[#25d366] shrink-0" aria-hidden="true" />
+                      <MessageCircle
+                        size={16}
+                        className="text-[#25d366] shrink-0"
+                        aria-hidden="true"
+                      />
                       WhatsApp: (19) 99475-7375
                     </a>
                   </li>
@@ -59,7 +108,11 @@ export default function ContatoPage() {
                       href={`mailto:${EMAIL}`}
                       className="inline-flex items-center gap-2.5 text-sm text-[#6b6b6b] hover:text-[#0a0a0a] transition-colors font-[var(--font-ibmplex)]"
                     >
-                      <Mail size={16} className="text-[#c8102e] shrink-0" aria-hidden="true" />
+                      <Mail
+                        size={16}
+                        className="text-[#c8102e] shrink-0"
+                        aria-hidden="true"
+                      />
                       {EMAIL}
                     </a>
                   </li>
@@ -71,7 +124,11 @@ export default function ContatoPage() {
                       className="inline-flex items-center gap-2.5 text-sm text-[#6b6b6b] hover:text-[#0a0a0a] transition-colors font-[var(--font-ibmplex)]"
                       aria-label="Instagram do Laboratório Paulista"
                     >
-                      <Instagram size={16} className="text-[#c8102e] shrink-0" aria-hidden="true" />
+                      <Instagram
+                        size={16}
+                        className="text-[#c8102e] shrink-0"
+                        aria-hidden="true"
+                      />
                       @laboratoriopaulistasp
                     </a>
                   </li>
@@ -83,7 +140,11 @@ export default function ContatoPage() {
                       className="inline-flex items-center gap-2.5 text-sm text-[#6b6b6b] hover:text-[#0a0a0a] transition-colors font-[var(--font-ibmplex)]"
                       aria-label="Facebook do Laboratório Paulista"
                     >
-                      <Facebook size={16} className="text-[#c8102e] shrink-0" aria-hidden="true" />
+                      <Facebook
+                        size={16}
+                        className="text-[#c8102e] shrink-0"
+                        aria-hidden="true"
+                      />
                       laboratoriopaulistasp
                     </a>
                   </li>
@@ -93,12 +154,13 @@ export default function ContatoPage() {
               <h2 className="text-[#0a0a0a] text-2xl font-bold mb-8">
                 Envie uma mensagem
               </h2>
+
               <form
-                action={`mailto:${EMAIL}`}
-                method="get"
-                encType="text/plain"
+                ref={formRef}
+                onSubmit={handleSubmit}
                 className="flex flex-col gap-5"
                 aria-label="Formulário de contato"
+                noValidate
               >
                 <div className="flex flex-col gap-1.5">
                   <label
@@ -141,7 +203,8 @@ export default function ContatoPage() {
                     htmlFor="telefone"
                     className="text-[#0a0a0a] text-sm font-medium"
                   >
-                    Telefone
+                    Telefone{" "}
+                    <span className="text-[#6b6b6b] font-normal">(opcional)</span>
                   </label>
                   <input
                     id="telefone"
@@ -170,11 +233,36 @@ export default function ContatoPage() {
                   />
                 </div>
 
+                {/* Feedback inline */}
+                {status === "success" && (
+                  <div
+                    role="status"
+                    className="flex items-center gap-2.5 text-sm text-[#166534] bg-[#f0fdf4] border border-[#bbf7d0] rounded-[4px] px-4 py-3"
+                  >
+                    <CheckCircle size={16} className="shrink-0" aria-hidden="true" />
+                    Mensagem enviada. Retornaremos em breve.
+                  </div>
+                )}
+
+                {status === "error" && (
+                  <div
+                    role="alert"
+                    className="flex items-center gap-2.5 text-sm text-[#991b1b] bg-[#fef2f2] border border-[#fecaca] rounded-[4px] px-4 py-3"
+                  >
+                    <AlertCircle size={16} className="shrink-0" aria-hidden="true" />
+                    Erro ao enviar. Tente novamente ou use um dos canais acima.
+                  </div>
+                )}
+
                 <button
                   type="submit"
-                  className="px-6 py-3 bg-[#c8102e] hover:bg-[#a00e25] text-white font-medium rounded-[4px] transition-colors duration-150 text-sm self-start"
+                  disabled={status === "sending"}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#c8102e] hover:bg-[#a00e25] disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium rounded-[4px] transition-colors duration-150 text-sm self-start"
                 >
-                  Enviar mensagem
+                  {status === "sending" && (
+                    <Loader2 size={15} className="animate-spin" aria-hidden="true" />
+                  )}
+                  {status === "sending" ? "Enviando…" : "Enviar mensagem"}
                 </button>
               </form>
             </div>
@@ -195,7 +283,11 @@ export default function ContatoPage() {
                     </h3>
                     <ul className="flex flex-col gap-3 text-sm">
                       <li className="flex gap-3">
-                        <MapPin size={16} className="shrink-0 mt-0.5 text-[#c8102e]" aria-hidden="true" />
+                        <MapPin
+                          size={16}
+                          className="shrink-0 mt-0.5 text-[#c8102e]"
+                          aria-hidden="true"
+                        />
                         <span className="text-[#6b6b6b]">
                           {u.endereco} — {u.cidade}/SP
                           {u.cep ? `, CEP ${u.cep}` : ""}
@@ -203,7 +295,11 @@ export default function ContatoPage() {
                       </li>
                       {u.telefones.map((tel) => (
                         <li key={tel} className="flex gap-3 items-center">
-                          <Phone size={16} className="shrink-0 text-[#c8102e]" aria-hidden="true" />
+                          <Phone
+                            size={16}
+                            className="shrink-0 text-[#c8102e]"
+                            aria-hidden="true"
+                          />
                           <a
                             href={`tel:${tel.replace(/\D/g, "")}`}
                             className="text-[#6b6b6b] hover:text-[#c8102e] transition-colors"
@@ -214,9 +310,15 @@ export default function ContatoPage() {
                       ))}
                       {u.horarios.map((h) => (
                         <li key={h.dias} className="flex gap-3">
-                          <Clock size={16} className="shrink-0 mt-0.5 text-[#c8102e]" aria-hidden="true" />
+                          <Clock
+                            size={16}
+                            className="shrink-0 mt-0.5 text-[#c8102e]"
+                            aria-hidden="true"
+                          />
                           <span className="text-[#6b6b6b]">
-                            <span className="text-[#0a0a0a] font-medium">{h.dias}:</span>{" "}
+                            <span className="text-[#0a0a0a] font-medium">
+                              {h.dias}:
+                            </span>{" "}
                             {h.horario}
                           </span>
                         </li>
