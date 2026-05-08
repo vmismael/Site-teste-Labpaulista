@@ -100,7 +100,7 @@ export default function VideoHero() {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   const logoT = easeInOut(clamp((progress - 0.16) / 0.10, 0, 1));
   // Deslocamento em % do viewport: 0 = centro, alvo = (alvoX-50, alvoY-50)
-  const logoDX = lerp(0, isMobile ? 28 : 42, logoT);
+  const logoDX = lerp(0, isMobile ? 28 : 45, logoT);
   const logoDY = lerp(0, isMobile ? -39 : -37, logoT);
   const logoScale = lerp(1.6, 0.55, logoT);
   const logoOpacity = Math.min(progress / 0.04, 1);
