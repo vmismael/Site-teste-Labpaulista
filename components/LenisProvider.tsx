@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { ReactLenis, useLenis } from "lenis/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
@@ -28,10 +29,28 @@ function GSAPSync() {
   return null;
 }
 
+// Lenis intercepta o scroll nativo, então o scroll-to-top default do
+// App Router não funciona em navegação. Reseta manualmente em cada troca de rota.
+function ScrollToTopOnNav() {
+  const pathname = usePathname();
+  const lenis = useLenis();
+
+  useEffect(() => {
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, lenis]);
+
+  return null;
+}
+
 export function LenisProvider({ children }: { children: ReactNode }) {
   return (
     <ReactLenis root options={{ autoRaf: false, lerp: 0.08, duration: 1.4 }}>
       <GSAPSync />
+      <ScrollToTopOnNav />
       {children}
     </ReactLenis>
   );

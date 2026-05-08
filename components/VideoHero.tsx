@@ -52,7 +52,7 @@ function HeroLogo() {
       width={260}
       height={120}
       priority
-      className="object-contain select-none"
+      className="object-contain select-none w-32 md:w-44"
       draggable={false}
     />
   );
@@ -97,10 +97,12 @@ export default function VideoHero() {
   }, []);
 
   // ── Logo ─────────────────────────────────────────────────────────────────
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   const logoT = easeInOut(clamp((progress - 0.16) / 0.10, 0, 1));
-  const logoLeft = lerp(50, 94, logoT);
-  const logoTop = lerp(50, 13, logoT);
-  const logoScale = lerp(1.6, 1, logoT);
+  // Deslocamento em % do viewport: 0 = centro, alvo = (alvoX-50, alvoY-50)
+  const logoDX = lerp(0, isMobile ? 28 : 42, logoT);
+  const logoDY = lerp(0, isMobile ? -39 : -37, logoT);
+  const logoScale = lerp(1.6, 0.75, logoT);
   const logoOpacity = Math.min(progress / 0.04, 1);
 
   // ── Animações de fundo ───────────────────────────────────────────────────
@@ -169,12 +171,10 @@ export default function VideoHero() {
 
         {/* ── Logo animado ── */}
         <div
-          className="absolute pointer-events-none"
+          className="absolute left-1/2 top-1/2 pointer-events-none"
           style={{
             zIndex: 8,
-            left: `${logoLeft}%`,
-            top: `${logoTop}%`,
-            transform: `translate(-50%, -50%) scale(${logoScale})`,
+            transform: `translate(calc(-50% + ${logoDX}vw), calc(-50% + ${logoDY}vh)) scale(${logoScale})`,
             opacity: logoOpacity,
             willChange: "transform, opacity",
           }}
