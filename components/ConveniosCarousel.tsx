@@ -137,12 +137,17 @@ export default function ConveniosCarousel() {
               key={i}
               className="shrink-0 mx-3 w-44 h-24 flex items-center justify-center px-5 border border-[rgba(0,0,0,0.08)] rounded-[4px] bg-white"
             >
-              <img
-                src={src}
-                alt=""
-                className="object-contain pointer-events-none select-none"
-                style={{ width: 130, height: 70 }}
-                draggable={false}
+              <div
+                className="pointer-events-none select-none"
+                style={{
+                  width: 130,
+                  height: 70,
+                  backgroundImage: `url(${src})`,
+                  backgroundSize: "contain",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                  backgroundColor: "white",
+                }}
               />
             </div>
           ))}

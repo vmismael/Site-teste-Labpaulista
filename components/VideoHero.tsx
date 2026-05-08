@@ -102,7 +102,7 @@ export default function VideoHero() {
   // Deslocamento em % do viewport: 0 = centro, alvo = (alvoX-50, alvoY-50)
   const logoDX = lerp(0, isMobile ? 28 : 42, logoT);
   const logoDY = lerp(0, isMobile ? -39 : -37, logoT);
-  const logoScale = lerp(1.6, 0.75, logoT);
+  const logoScale = lerp(1.6, 0.55, logoT);
   const logoOpacity = Math.min(progress / 0.04, 1);
 
   // ── Animações de fundo ───────────────────────────────────────────────────
