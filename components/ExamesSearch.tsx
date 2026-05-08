@@ -4,12 +4,15 @@ import { useState } from "react";
 import { Search, X } from "lucide-react";
 import { EXAMES_LISTA } from "@/lib/exames-lista";
 
+const normalize = (s: string) =>
+  s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+
 export default function ExamesSearch() {
   const [query, setQuery] = useState("");
 
-  const q = query.trim().toLowerCase();
+  const q = normalize(query.trim());
   const results = q.length >= 2
-    ? EXAMES_LISTA.filter((nome) => nome.toLowerCase().includes(q))
+    ? EXAMES_LISTA.filter((nome) => normalize(nome).includes(q))
     : [];
 
   const hasQuery = q.length >= 2;
