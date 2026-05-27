@@ -231,7 +231,7 @@ export default function VideoHero() {
                 {[
                   { valor: "+20", label: "Anos de operação" },
                   { valor: "ONA III", label: "Nível máximo" },
-                  { valor: "Platina", label: "15 anos PNCQ" },
+                  { valor: "Platina", label: "23 anos PNCQ" },
                   { valor: "2", label: "Unidades SP" },
                 ].map(({ valor, label }) => (
                   <div key={label} className="border-l-2 border-[#c8102e] pl-4">

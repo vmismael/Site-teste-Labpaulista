@@ -195,7 +195,7 @@ export const CERTIFICACOES: Certificacao[] = [
 ];
 
 export const WHATSAPP_URL = "https://wa.me/5519994757375";
-export const EMAIL = "contato@labpaulistarc.com.br";
+export const EMAIL = "laboratorio@laboratoriopaulista.com";
 export const RESULTADOS_URL = "https://shift.laboratoriopaulista.com:8443/shift/lis/laboratoriopaulista/elis/s01.iu.web.Login.cls";
 export const INSTAGRAM = "https://www.instagram.com/laboratoriopaulistasp";
 export const FACEBOOK = "https://www.facebook.com/laboratoriopaulistasp";

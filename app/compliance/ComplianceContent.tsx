@@ -303,8 +303,8 @@ export default function ComplianceContent() {
                 },
                 {
                   label: "Site",
-                  valor: "www.chorc.com.br",
-                  href: "https://www.chorc.com.br",
+                  valor: "www.labpaulistarc.com.br",
+                  href: "https://www.labpaulistarc.com.br",
                   external: true,
                 },
               ].map(({ label, valor, href, external }) => (
