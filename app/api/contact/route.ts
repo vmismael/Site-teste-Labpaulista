@@ -18,25 +18,38 @@ export async function POST(req: Request) {
     );
   }
 
-  const { error } = await resend.emails.send({
-    from: "onboarding@resend.dev",
-    to: "laboratorio@laboratoriopaulista.com",
-    subject: `Contato via site — ${nome}`,
-    text: [
-      `Nome: ${nome}`,
-      `E-mail: ${email}`,
-      telefone ? `Telefone: ${telefone}` : null,
-      ``,
-      `Mensagem:`,
-      mensagem,
-    ]
-      .filter((l) => l !== null)
-      .join("\n"),
-  });
+  try {
+    const { data, error } = await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: "laboratorio@laboratoriopaulista.com",
+      subject: `Contato via site — ${nome}`,
+      text: [
+        `Nome: ${nome}`,
+        `E-mail: ${email}`,
+        telefone ? `Telefone: ${telefone}` : null,
+        ``,
+        `Mensagem:`,
+        mensagem,
+      ]
+        .filter((l) => l !== null)
+        .join("\n"),
+    });
 
-  if (error) {
-    return NextResponse.json({ error: "Falha ao enviar." }, { status: 500 });
+    if (error) {
+      console.error("[Resend error]", JSON.stringify(error));
+      return NextResponse.json(
+        { error: "Falha ao enviar.", detail: error },
+        { status: 500 }
+      );
+    }
+
+    console.log("[Resend ok]", data?.id);
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    console.error("[Resend exception]", err);
+    return NextResponse.json(
+      { error: "Exceção ao enviar.", detail: String(err) },
+      { status: 500 }
+    );
   }
-
-  return NextResponse.json({ ok: true });
 }
