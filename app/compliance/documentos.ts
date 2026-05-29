@@ -611,7 +611,69 @@ Comunicar o fornecedor previamente à qualificação nossos: Código de Ética e
 Disponibilizar ao fornecedor o Código de Ética e Conduta do Fornecedor, com Carta de Aceite e Declaração Anticorrupção assinados pelo mesmo.`,
   },
   {
-    titulo: "Política de Gestão de Risco",
-    conteudo: null,
+    titulo: "Política de Gestão de Riscos",
+    conteudo: `Aspectos gerais
+Reconhecer os diferentes riscos (sanitários, assistenciais, ambientais, ocupacionais, trabalhistas e de responsabilidade civil), prevenir os riscos sempre que possível e planejar-se para dirimir e mitigar possíveis eventos adversos.
+
+O quê: Política de gestão de riscos.
+Por que: Prevenir os riscos envolvidos nos diferentes processos.
+Quem: Núcleo de Segurança do Paciente.
+Quando: Continuamente.
+Onde: Todos os setores.
+Monitoramento: Indicador de Ocorrência e não conformidades registradas. Acompanhamento mensal pela Qualidade, registrado em Indicador da Liderança.
+
+Redução dos riscos sanitários
+— Estabelecimento e aplicação de boas práticas no manejo de material biológico e/ou químico e/ou pérfuro-cortante, com uso adequado de equipamentos de proteção individual (EPI) — NR 6.
+— Utilização de adequadas técnicas de limpeza e assepsia.
+— Adequado descarte de resíduos (ver Política de Gestão Ambiental — NI-DIR-009).
+
+Redução dos riscos assistenciais
+— Esclarecimento aos clientes acerca dos riscos envolvidos nos procedimentos realizados na Instituição (ver Política de Consentimento Informado e Esclarecido — NI-DIR-008).
+— Treinamento e atualização de profissionais para a realização dos procedimentos.
+— Garantir a segurança e saúde no trabalho, amparado na NR 32.
+— Estimular práticas de farmacovigilância, visando a detecção, avaliação, compreensão e prevenção dos efeitos adversos ou quaisquer problemas relacionados a medicamentos.
+— Estimular práticas de tecnovigilância visando a segurança sanitária de produtos para saúde, pós-comercialização (equipamentos, materiais, artigo médico-hospitalares e produtos para diagnóstico).
+
+Redução dos riscos ambientais
+— Adequar gestão e gerenciamento de resíduos com riscos biológicos e/ou químicos (ver Política de Gestão Ambiental — NI-DIR-009).
+— Realizar a manipulação de produtos com riscos químicos em capela de fluxo laminar, com manutenção preventiva e corretiva periódica.
+— Utilização de coleta seletiva para lixo comum e reciclável.
+
+Redução dos riscos ocupacionais
+— Realização de exames médicos admissionais, periódicos e demissionais por empresa capacitada.
+— Adequar sinalização, com mapeamento de riscos institucionais para cada setor.
+— Uso obrigatório de EPI quando indicado.
+— Implantação do PPRA (NR09) e PCMSO (NR 07).
+
+Redução dos riscos trabalhistas
+— Respeitar rigorosamente a legislação trabalhista vigente, contando com empresa capacitada para a gestão dos processos de contratação, demissão e estabelecimento de valores a serem pagos (salários), férias e demais benefícios previstos em lei.
+— Controle da frequência por ponto eletrônico com biometria.
+
+Redução dos riscos de responsabilidade civil
+— Retaguarda jurídica para dirimir eventuais intercorrências.
+— Respeitar rigorosamente o Código de Defesa do Consumidor.
+— Respeitar rigorosamente o Código de Ética Médica do Conselho Regional de Medicina.
+— Respeitar rigorosamente a CLT.
+— Respeitar os Sindicatos da Saúde de Rio Claro, Farmacêutico, Biomédico e Enfermagem.
+— Respeitar a lei LGPD nº 13.709.
+— Utilização constante e ininterrupta de boas práticas clínicas.
+— Buscar a correta identificação dos clientes através de documento original com foto em todos os atendimentos.
+— Documentar e registrar todos os procedimentos realizados na Instituição.
+— Os prontuários médicos e fichas de coleta serão arquivados em duas versões: física e eletrônica.
+
+Notificação dos Eventos Adversos
+— Estimular a notificação através de Registros de Ocorrências.
+— Nos casos dos Eventos Adversos (EA) com dano grave e óbito, informar ONA Integrare e NOTIVISA.
+
+Monitoramento dos Riscos Institucionais
+— Acompanhar e atualizar mensalmente os Eventos/Ocorrências e Eventos Adversos, com adoção de medidas corretivas e/ou preventivas para redução do risco institucional.
+— CIPA (NR 05).
+
+Cultura da Comunicação Intersetorial
+— Reuniões periódicas para disseminar informações e padronizá-las.
+— Minimização de riscos para colaboradores e clientes, com melhoria contínua do bem-estar de ambos.
+
+Núcleo de Segurança do Paciente
+— Promover e apoiar a aplicação de iniciativas voltadas à segurança do paciente em diferentes áreas da atenção, organização e gestão de serviços de saúde, atendendo as Portarias: 529/2013, 1377/2016, 2095/2013 e a RDC 36 (ver Política de Segurança do Paciente — NI-DIR-018).`,
   },
 ];
