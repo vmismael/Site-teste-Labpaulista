@@ -33,6 +33,7 @@ export default function ContatoPage() {
       email: fd.get("email") as string,
       telefone: fd.get("telefone") as string,
       mensagem: fd.get("mensagem") as string,
+      website: fd.get("website") as string,
     };
 
     try {
@@ -253,6 +254,16 @@ export default function ContatoPage() {
                     Erro ao enviar. Tente novamente ou use um dos canais acima.
                   </div>
                 )}
+
+                {/* Honeypot anti-spam — invisível para humanos */}
+                <input
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ display: "none" }}
+                />
 
                 <button
                   type="submit"
