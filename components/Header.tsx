@@ -10,12 +10,13 @@ import { cn } from "@/lib/cn";
 import { RESULTADOS_URL } from "@/lib/constants";
 
 const NAV_LINKS = [
-  { href: "/sobre", label: "Sobre" },
-  { href: "/exames", label: "Exames" },
-  { href: "/qualidade", label: "Qualidade" },
-  { href: "/compliance", label: "Compliance" },
-  { href: "/unidades", label: "Unidades" },
-  { href: "/contato", label: "Contato" },
+  { href: "/sobre",          label: "Sobre" },
+  { href: "/exames",         label: "Exames" },
+  { href: "/qualidade",      label: "Qualidade" },
+  { href: "/compliance",     label: "Compliance" },
+  { href: "/transparencia",  label: "Transparência" },
+  { href: "/unidades",       label: "Unidades" },
+  { href: "/contato",        label: "Contato" },
 ];
 
 export default function Header() {
